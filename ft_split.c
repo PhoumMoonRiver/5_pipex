@@ -6,7 +6,7 @@
 /*   By: njerasea <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 18:22:58 by njerasea          #+#    #+#             */
-/*   Updated: 2022/09/17 18:52:43 by njerasea         ###   ########.fr       */
+/*   Updated: 2022/09/18 18:43:54 by njerasea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,14 +81,13 @@ char	**ft_prot(char const *s, char c, char **dest)
 		else
 			i++;
 	}
-	dest[k] = NULL;
 	return (dest);
 }
 
 char	**ft_split(char const *s, char c)
 {
 	char	**dest;
-	int	i;
+	int		i;
 
 	i = 0;
 	if (!s)
@@ -98,7 +97,6 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	dest = ft_prot(s, c, dest);
 	i = num_word(s, c);
-	dprintf(2, "%d\n", i);
-//	dest[i] = NULL;
+	dest[i] = NULL;
 	return (dest);
 }

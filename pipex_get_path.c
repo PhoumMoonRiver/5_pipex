@@ -6,31 +6,48 @@
 /*   By: njerasea <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 15:05:20 by njerasea          #+#    #+#             */
-/*   Updated: 2022/09/17 18:50:06 by njerasea         ###   ########.fr       */
+/*   Updated: 2022/09/18 18:35:37 by njerasea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-#include <string.h>
+
+char	*ft_wh_join(char **all_path, char **all_cmd, char **cmd)
+{
+	int		i;
+	char	*execu;
+	char	*get_path;
+
+	i = 0;
+	while (all_path[i])
+	{
+		get_path = ft_strjoin(all_path[i], "/");
+		execu = ft_strjoin(get_path, *all_cmd);
+		free(get_path);
+		if (access(execu, F_OK | R_OK) == 0)
+		{
+			ft_free2d(all_cmd);
+			return (execu);
+		}
+		free(execu);
+		i++;
+	}
+	ft_free2d(all_path);
+	ft_free2d(all_cmd);
+	return (*cmd);
+}
 
 void	execu(char **av, char **envp)
 {
 	char	**cmd;
-	char	*execu_path;
 
 	cmd = ft_split(*av, 32);
-	if(access(*av, F_OK | R_OK) == 0)
-		execve(*av, cmd, envp);
-	execu_path = ft_get_path(av, envp);
-	dprintf(2, "This is execu ==> [%p][%s]\n", execu_path, execu_path);
-	dprintf(2, "This is av ==> [%p][%s]\n", av[0], av[0]);
-	if (execve(execu_path, cmd, envp) == -1)
+	if (access(*av, F_OK | R_OK) == 0)
 	{
-		ft_putstr_fd("command not found plase try again!!", 2);
 		ft_free2d(cmd);
-		exit(1);
+		execve(*av, cmd, envp);
 	}
-	free(execu_path);
+	execve(ft_get_path(av, envp), cmd, envp);
 	ft_free2d(cmd);
 }
 
@@ -53,29 +70,12 @@ char	*ft_get_path(char **cmd, char **envp)
 {
 	char	**all_path;
 	char	**all_cmd;
-	char	*get_path;
-	char	*execu;
-	int	i;
+	int		i;
 
 	i = 0;
 	all_cmd = ft_split(*cmd, 32);
-	while(ft_strncmp(*envp++, "PATH", 4) != 0)
-	all_path = ft_split(*envp + 5, ':');
-	while(all_path[i])
-	{
-		get_path = ft_strjoin(all_path[i], "/");
-		execu = ft_strjoin(get_path, *all_cmd);
-		free(get_path);
-		if(access(execu, F_OK | R_OK) == 0)
-		{
-			ft_free2d(all_cmd);
-			ft_free2d(all_path);
-			return(execu);
-		}
-		free(execu);
+	while (ft_strncmp(envp[i], "PATH", 4) != 0)
 		i++;
-	}
-	ft_free2d(all_path);
-	ft_free2d(all_cmd);
-	return (*cmd);
+	all_path = ft_split(envp[i] + 5, ':');
+	return (ft_wh_join(all_path, all_cmd, cmd));
 }

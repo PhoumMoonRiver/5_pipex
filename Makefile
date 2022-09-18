@@ -6,7 +6,7 @@
 #    By: njerasea <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/15 14:34:48 by njerasea          #+#    #+#              #
-#    Updated: 2022/09/17 15:06:49 by njerasea         ###   ########.fr        #
+#    Updated: 2022/09/18 18:40:19 by njerasea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRCS = ft_split.c\
        pipex_get_path.c\
        pipex_libft.c
 
-CC = gcc -Wall -Wextra -Werror -std=c99 -g
+CC = gcc -Wall -Wextra -Werror -std=c99
 RM = rm -rf
 
 all: $(NAME)

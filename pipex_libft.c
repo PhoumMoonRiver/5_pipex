@@ -6,13 +6,13 @@
 /*   By: njerasea <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 14:40:56 by njerasea          #+#    #+#             */
-/*   Updated: 2022/09/17 17:16:55 by njerasea         ###   ########.fr       */
+/*   Updated: 2022/09/18 18:00:32 by njerasea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	ft_strncmp(char  *s1, char *s2, size_t n)
+int	ft_strncmp(char *s1, char *s2, size_t n)
 {
 	unsigned int	i;
 
@@ -83,7 +83,7 @@ char	*ft_strdup(const char *s1)
 
 void	ft_putstr_fd(char *s, int fd)
 {
-	if(!s)
+	if (!s)
 		return ;
 	write(fd, s, ft_strlen(s));
 }
